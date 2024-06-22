@@ -3,7 +3,7 @@ import Card from '../Card/Card'
 
 interface Props {}
 
-const CardList = (props: Props) => {
+const CardList: React.FC<Props> = (props: Props) : JSX.Element => {
   return (
     <div>
         <Card tripName="Hawaii 2024" distanceTraveledInMiles={3500}/>

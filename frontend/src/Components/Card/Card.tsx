@@ -8,7 +8,7 @@ interface Props {
 
 }
 
-const Card = ({tripName, distanceTraveledInMiles}: Props) => {
+const Card: React.FC<Props> = ({tripName, distanceTraveledInMiles}: Props) : JSX.Element => {
   return (
     <div className="card">
         <img src="https://wallpaperaccess.com/full/254381.jpg" alt="Image" />
