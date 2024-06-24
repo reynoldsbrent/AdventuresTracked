@@ -21,7 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Folder Include="Dtos\Account\" />
+    <Folder Include="Dtos\Leg\" />
+    <Folder Include="Dtos\Journal\" />
+    <Folder Include="Dtos\Airport\" />
+    <Folder Include="Dtos\Photo\" />
   </ItemGroup>
 
 </Project>
