@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using api.Mappers;
 using api.Dtos.Trip;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
@@ -17,17 +18,19 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var trips = _context.Trips.ToList().Select(s => s.ToTripDto());
+            var trips = await _context.Trips.ToListAsync();
 
-            return Ok(trips);
+            var tripDto = trips.Select(s => s.ToTripDto());
+
+            return Ok(tripDto);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var trip = _context.Trips.Find(id);
+            var trip = await _context.Trips.FindAsync(id);
 
             if(trip == null)
             {
@@ -38,13 +41,13 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateTripRequestDto tripDto)
+        public async Task<IActionResult> Create([FromBody] CreateTripRequestDto tripDto)
         {
             var tripModel = tripDto.ToTripFromCreateDto();
-            _context.Trips.Add(tripModel);
+            await _context.Trips.AddAsync(tripModel);
             try
             {
-                _context.SaveChanges();
+               await _context.SaveChangesAsync();
             }catch
             {
                 return StatusCode(500, "An error occured while createing the trip");
@@ -55,9 +58,9 @@ namespace api.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateTripRequestDto updateDto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateTripRequestDto updateDto)
         {
-            var tripModel = _context.Trips.FirstOrDefault(x => x.TripId == id);
+            var tripModel = await _context.Trips.FirstOrDefaultAsync(x => x.TripId == id);
 
             if(tripModel == null)
             {
@@ -69,16 +72,16 @@ namespace api.Controllers
             tripModel.StartDate = updateDto.StartDate;
             tripModel.EndDate = updateDto.EndDate;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(tripModel.ToTripDto());
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var tripModel = _context.Trips.FirstOrDefault(x => x.TripId == id);
+            var tripModel = await _context.Trips.FirstOrDefaultAsync(x => x.TripId == id);
 
             if(tripModel == null)
             {
@@ -86,7 +89,7 @@ namespace api.Controllers
             }
 
             _context.Trips.Remove(tripModel);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
