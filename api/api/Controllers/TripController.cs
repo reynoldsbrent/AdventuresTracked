@@ -73,5 +73,22 @@ namespace api.Controllers
 
             return Ok(tripModel.ToTripDto());
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var tripModel = _context.Trips.FirstOrDefault(x => x.TripId == id);
+
+            if(tripModel == null)
+            {
+                return NotFound();
+            }
+
+            _context.Trips.Remove(tripModel);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
     }
 }
