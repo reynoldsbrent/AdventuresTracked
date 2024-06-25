@@ -52,5 +52,26 @@ namespace api.Controllers
             
             return CreatedAtAction(nameof(GetById), new { id = tripModel.TripId }, tripModel.ToTripDto());
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateTripRequestDto updateDto)
+        {
+            var tripModel = _context.Trips.FirstOrDefault(x => x.TripId == id);
+
+            if(tripModel == null)
+            {
+                return NotFound();
+            }
+
+            tripModel.UserId = updateDto.UserId;
+            tripModel.TripName = updateDto.TripName;
+            tripModel.StartDate = updateDto.StartDate;
+            tripModel.EndDate = updateDto.EndDate;
+
+            _context.SaveChanges();
+
+            return Ok(tripModel.ToTripDto());
+        }
     }
 }
