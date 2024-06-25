@@ -1,5 +1,6 @@
 ﻿using api.Dtos.Trip;
 using api.Models;
+using System.Runtime.CompilerServices;
 
 namespace api.Mappers
 {
@@ -14,6 +15,17 @@ namespace api.Mappers
                 StartDate = tripModel.StartDate,
                 EndDate = tripModel.EndDate,
                 CreatedAt = tripModel.CreatedAt
+            };
+        }
+
+        public static Trip ToTripFromCreateDto(this CreateTripRequestDto tripDto)
+        {
+            return new Trip
+            {
+                UserId = tripDto.UserId,
+                TripName = tripDto.TripName,
+                StartDate = tripDto.StartDate,
+                EndDate = tripDto.EndDate,
             };
         }
     }

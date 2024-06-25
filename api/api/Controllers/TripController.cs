@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using api.Mappers;
+using api.Dtos.Trip;
 
 namespace api.Controllers
 {
@@ -34,6 +35,22 @@ namespace api.Controllers
             }
 
             return Ok(trip.ToTripDto());
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] CreateTripRequestDto tripDto)
+        {
+            var tripModel = tripDto.ToTripFromCreateDto();
+            _context.Trips.Add(tripModel);
+            try
+            {
+                _context.SaveChanges();
+            }catch
+            {
+                return StatusCode(500, "An error occured while createing the trip");
+            }
+            
+            return CreatedAtAction(nameof(GetById), new { id = tripModel.TripId }, tripModel.ToTripDto());
         }
     }
 }
