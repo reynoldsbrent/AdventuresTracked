@@ -1,5 +1,7 @@
 
 using api.Data;
+using api.Interfaces;
+using api.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace api
@@ -23,6 +25,8 @@ namespace api
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            builder.Services.AddScoped<ITripRepository, TripRepository>();
 
             var app = builder.Build();
 
