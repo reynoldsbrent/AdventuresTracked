@@ -7,5 +7,6 @@ namespace api.Interfaces
         Task<List<Journal>> GetAllAsync();
         Task<Journal?> GetByIdAsync(int id);
         Task<Journal> CreateAsync(Journal journalModel);
+        Task<Journal?> DeleteAsync(int id);
     }
 }

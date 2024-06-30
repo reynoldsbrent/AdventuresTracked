@@ -53,5 +53,19 @@ namespace api.Controllers
             await _journalRepo.CreateAsync(journalModel);
             return CreatedAtAction(nameof(GetById), new { id = journalModel }, journalModel.ToJournalDto());
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var journalModel = await _journalRepo.DeleteAsync(id);
+
+            if(journalModel == null)
+            {
+                return NotFound("Comment does not exist");
+            }
+
+            return Ok(journalModel);
+        }
     }
 }

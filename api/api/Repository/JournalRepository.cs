@@ -20,6 +20,20 @@ namespace api.Repository
             return journalModel;
         }
 
+        public async Task<Journal?> DeleteAsync(int id)
+        {
+            var journalModel = await _context.Journals.FirstOrDefaultAsync(x => x.JournalId == id);
+
+            if(journalModel == null)
+            {
+                return null;
+            }
+
+            _context.Journals.Remove(journalModel);
+            await _context.SaveChangesAsync();
+            return journalModel;
+        }
+
         public async Task<List<Journal>> GetAllAsync()
         {
             return await _context.Journals.ToListAsync();
