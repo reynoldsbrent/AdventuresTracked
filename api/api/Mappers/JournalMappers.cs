@@ -17,5 +17,15 @@ namespace api.Mappers
                 TripId = journalModel.TripId
             };
         }
+
+        public static Journal ToJournalFromCreate(this CreateJournalDto journalDto, int tripId)
+        {
+            return new Journal
+            {
+                Title = journalDto.Title,
+                Entry = journalDto.Entry,
+                TripId = tripId
+            };
+        }
     }
 }

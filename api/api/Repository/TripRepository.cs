@@ -46,6 +46,11 @@ namespace api.Repository
             return await _context.Trips.Include(c => c.Journals).FirstOrDefaultAsync(i => i.TripId == id);
         }
 
+        public Task<bool> TripExists(int id)
+        {
+            return _context.Trips.AnyAsync(t => t.TripId == id);
+        }
+
         public async Task<Trip?> UpdateAsync(int id, UpdateTripRequestDto tripDto)
         {
             var existingTrip = await _context.Trips.FirstOrDefaultAsync(x => x.TripId == id);

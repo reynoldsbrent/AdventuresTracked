@@ -10,5 +10,6 @@ namespace api.Interfaces
         Task<Trip> CreateAsync(Trip tripModel);
         Task<Trip?> UpdateAsync(int id, UpdateTripRequestDto tripDto);
         Task<Trip?> DeleteAsync(int id);
+        Task<bool> TripExists(int id);
     }
 }

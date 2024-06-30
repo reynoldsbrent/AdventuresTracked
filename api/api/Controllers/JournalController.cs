@@ -1,4 +1,5 @@
-﻿using api.Interfaces;
+﻿using api.Dtos.Journal;
+using api.Interfaces;
 using api.Mappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,11 @@ namespace api.Controllers
     public class JournalController : ControllerBase
     {
         private readonly IJournalRepository _journalRepo;
-        public JournalController(IJournalRepository journalRepo)
+        private readonly ITripRepository _tripRepo;
+        public JournalController(IJournalRepository journalRepo, ITripRepository tripRepo)
         {
             _journalRepo = journalRepo;
+            _tripRepo = tripRepo;
         }
 
         [HttpGet]
@@ -25,7 +28,7 @@ namespace api.Controllers
             return Ok(journalDto);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var journal = await _journalRepo.GetByIdAsync(id);
@@ -36,6 +39,19 @@ namespace api.Controllers
             }
 
             return Ok(journal.ToJournalDto());
+        }
+
+        [HttpPost("{tripId}")]
+        public async Task<IActionResult> Create([FromRoute] int tripId, CreateJournalDto journalDto)
+        {
+            if(!await _tripRepo.TripExists(tripId))
+            {
+                return BadRequest("Trip does not exist");
+            }
+
+            var journalModel = journalDto.ToJournalFromCreate(tripId);
+            await _journalRepo.CreateAsync(journalModel);
+            return CreatedAtAction(nameof(GetById), new { id = journalModel }, journalModel.ToJournalDto());
         }
     }
 }

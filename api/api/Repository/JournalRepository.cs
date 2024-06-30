@@ -12,6 +12,14 @@ namespace api.Repository
         {
             _context = context;
         }
+
+        public async Task<Journal> CreateAsync(Journal journalModel)
+        {
+            await _context.Journals.AddAsync(journalModel);
+            await _context.SaveChangesAsync();
+            return journalModel;
+        }
+
         public async Task<List<Journal>> GetAllAsync()
         {
             return await _context.Journals.ToListAsync();
@@ -21,5 +29,6 @@ namespace api.Repository
         {
             return await _context.Journals.FindAsync(id);
         }
+
     }
 }
