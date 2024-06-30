@@ -44,5 +44,21 @@ namespace api.Repository
             return await _context.Journals.FindAsync(id);
         }
 
+        public async Task<Journal?> UpdateAsync(int id, Journal journalModel)
+        {
+            var existingJournal = await _context.Journals.FindAsync(id);
+
+            if(existingJournal  == null)
+            {
+                return null;
+            }
+
+            existingJournal.Title = journalModel.Title;
+            existingJournal.Entry = journalModel.Entry;
+
+            await _context.SaveChangesAsync();
+
+            return existingJournal;
+        }
     }
 }

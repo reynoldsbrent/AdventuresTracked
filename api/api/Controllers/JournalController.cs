@@ -51,7 +51,21 @@ namespace api.Controllers
 
             var journalModel = journalDto.ToJournalFromCreate(tripId);
             await _journalRepo.CreateAsync(journalModel);
-            return CreatedAtAction(nameof(GetById), new { id = journalModel }, journalModel.ToJournalDto());
+            return CreatedAtAction(nameof(GetById), new { id = journalModel.JournalId }, journalModel.ToJournalDto());
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateJournalRequestDto updateJournalDto)
+        {
+            var journal = await _journalRepo.UpdateAsync(id, updateJournalDto.ToJournalFromUpdate());
+
+            if (journal == null)
+            {
+                return NotFound("Comment not found");
+            }
+
+            return Ok(journal.ToJournalDto());
         }
 
         [HttpDelete]

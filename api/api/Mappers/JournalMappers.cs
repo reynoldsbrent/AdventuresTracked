@@ -27,5 +27,14 @@ namespace api.Mappers
                 TripId = tripId
             };
         }
+
+        public static Journal ToJournalFromUpdate(this UpdateJournalRequestDto journalDto)
+        {
+            return new Journal
+            {
+                Title = journalDto.Title,
+                Entry = journalDto.Entry
+            };
+        }
     }
 }
