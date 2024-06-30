@@ -14,7 +14,8 @@ namespace api.Mappers
                 TripId = tripModel.TripId,
                 StartDate = tripModel.StartDate,
                 EndDate = tripModel.EndDate,
-                CreatedAt = tripModel.CreatedAt
+                CreatedAt = tripModel.CreatedAt,
+                Journals = tripModel.Journals.Select(j => j.ToJournalDto()).ToList()
             };
         }
 

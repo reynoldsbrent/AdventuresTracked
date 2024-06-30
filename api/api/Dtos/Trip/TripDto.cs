@@ -1,4 +1,5 @@
-﻿using api.Models;
+﻿using api.Dtos.Journal;
+using api.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace api.Dtos.Trip
@@ -11,6 +12,7 @@ namespace api.Dtos.Trip
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public List<JournalDto> Journals { get; set; }
         
     }
 }

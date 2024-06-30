@@ -38,12 +38,12 @@ namespace api.Repository
 
         public async Task<List<Trip>> GetAllAsync()
         {
-            return await _context.Trips.ToListAsync();
+            return await _context.Trips.Include(c => c.Journals).ToListAsync();
         }
 
         public async Task<Trip?> GetByIdAsync(int id)
         {
-            return await _context.Trips.FindAsync(id);
+            return await _context.Trips.Include(c => c.Journals).FirstOrDefaultAsync(i => i.TripId == id);
         }
 
         public async Task<Trip?> UpdateAsync(int id, UpdateTripRequestDto tripDto)
