@@ -23,6 +23,11 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var trips = await _tripRepo.GetAllAsync();
 
             var tripDto = trips.Select(s => s.ToTripDto());
@@ -33,6 +38,11 @@ namespace api.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var trip = await _tripRepo.GetByIdAsync(id);
 
             if(trip == null)
@@ -46,7 +56,13 @@ namespace api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateTripRequestDto tripDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var tripModel = tripDto.ToTripFromCreateDto();
+
             try
             {
                 await _tripRepo.CreateAsync(tripModel);
@@ -63,6 +79,11 @@ namespace api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateTripRequestDto updateDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var tripModel = await _tripRepo.UpdateAsync(id, updateDto);
 
             if(tripModel == null)
@@ -77,6 +98,11 @@ namespace api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var tripModel = await _tripRepo.DeleteAsync(id);
 
             if(tripModel == null)

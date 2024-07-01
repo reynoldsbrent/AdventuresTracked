@@ -21,6 +21,11 @@ namespace api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var journals = await _journalRepo.GetAllAsync();
 
             var journalDto = journals.Select(s => s.ToJournalDto());
@@ -31,6 +36,11 @@ namespace api.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var journal = await _journalRepo.GetByIdAsync(id);
 
             if(journal == null)
@@ -44,7 +54,12 @@ namespace api.Controllers
         [HttpPost("{tripId:int}")]
         public async Task<IActionResult> Create([FromRoute] int tripId, CreateJournalDto journalDto)
         {
-            if(!await _tripRepo.TripExists(tripId))
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!await _tripRepo.TripExists(tripId))
             {
                 return BadRequest("Trip does not exist");
             }
@@ -58,6 +73,11 @@ namespace api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateJournalRequestDto updateJournalDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var journal = await _journalRepo.UpdateAsync(id, updateJournalDto.ToJournalFromUpdate());
 
             if (journal == null)
@@ -72,6 +92,11 @@ namespace api.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var journalModel = await _journalRepo.DeleteAsync(id);
 
             if(journalModel == null)
