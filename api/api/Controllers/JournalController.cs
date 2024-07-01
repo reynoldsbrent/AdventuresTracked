@@ -28,7 +28,7 @@ namespace api.Controllers
             return Ok(journalDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var journal = await _journalRepo.GetByIdAsync(id);
@@ -41,7 +41,7 @@ namespace api.Controllers
             return Ok(journal.ToJournalDto());
         }
 
-        [HttpPost("{tripId}")]
+        [HttpPost("{tripId:int}")]
         public async Task<IActionResult> Create([FromRoute] int tripId, CreateJournalDto journalDto)
         {
             if(!await _tripRepo.TripExists(tripId))
@@ -55,7 +55,7 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateJournalRequestDto updateJournalDto)
         {
             var journal = await _journalRepo.UpdateAsync(id, updateJournalDto.ToJournalFromUpdate());
@@ -69,7 +69,7 @@ namespace api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var journalModel = await _journalRepo.DeleteAsync(id);

@@ -30,7 +30,7 @@ namespace api.Controllers
             return Ok(tripDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var trip = await _tripRepo.GetByIdAsync(id);
@@ -60,7 +60,7 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateTripRequestDto updateDto)
         {
             var tripModel = await _tripRepo.UpdateAsync(id, updateDto);
@@ -74,7 +74,7 @@ namespace api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var tripModel = await _tripRepo.DeleteAsync(id);
