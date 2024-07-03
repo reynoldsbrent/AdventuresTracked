@@ -46,6 +46,14 @@ namespace api.Repository
                 trips = trips.Where(t => t.TripName.Contains(query.TripName));
             }
 
+            if (!string.IsNullOrWhiteSpace(query.SortBy))
+            {
+                if(query.SortBy.Equals("TripName", StringComparison.OrdinalIgnoreCase))
+                {
+                    trips = query.IsDescending ? trips.OrderByDescending(t => t.TripName) : trips.OrderBy(t => t.TripName);
+                }
+            }
+
             return await trips.ToListAsync();
         }
 
