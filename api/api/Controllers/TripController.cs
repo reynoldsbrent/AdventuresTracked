@@ -5,6 +5,7 @@ using api.Mappers;
 using api.Dtos.Trip;
 using Microsoft.EntityFrameworkCore;
 using api.Interfaces;
+using api.Helpers;
 
 namespace api.Controllers
 {
@@ -21,14 +22,14 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var trips = await _tripRepo.GetAllAsync();
+            var trips = await _tripRepo.GetAllAsync(query);
 
             var tripDto = trips.Select(s => s.ToTripDto());
 

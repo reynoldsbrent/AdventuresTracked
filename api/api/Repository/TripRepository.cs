@@ -1,5 +1,6 @@
 ﻿using api.Data;
 using api.Dtos.Trip;
+using api.Helpers;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -36,9 +37,16 @@ namespace api.Repository
             return tripModel;
         }
 
-        public async Task<List<Trip>> GetAllAsync()
+        public async Task<List<Trip>> GetAllAsync(QueryObject query)
         {
-            return await _context.Trips.Include(c => c.Journals).ToListAsync();
+            var trips = _context.Trips.Include(c => c.Journals).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(query.TripName))
+            {
+                trips = trips.Where(t => t.TripName.Contains(query.TripName));
+            }
+
+            return await trips.ToListAsync();
         }
 
         public async Task<Trip?> GetByIdAsync(int id)
