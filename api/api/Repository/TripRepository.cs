@@ -54,7 +54,9 @@ namespace api.Repository
                 }
             }
 
-            return await trips.ToListAsync();
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+            return await trips.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public async Task<Trip?> GetByIdAsync(int id)
