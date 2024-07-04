@@ -78,7 +78,6 @@ namespace api.Repository
                 return null;
             }
 
-            existingTrip.UserId = tripDto.UserId;
             existingTrip.TripName = tripDto.TripName;
             existingTrip.StartDate = tripDto.StartDate;
             existingTrip.EndDate = tripDto.EndDate;

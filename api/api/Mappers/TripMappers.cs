@@ -23,7 +23,6 @@ namespace api.Mappers
         {
             return new Trip
             {
-                UserId = tripDto.UserId,
                 TripName = tripDto.TripName,
                 StartDate = tripDto.StartDate,
                 EndDate = tripDto.EndDate,

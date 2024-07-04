@@ -5,8 +5,6 @@ namespace api.Models
 {
     public class Trip
     {
-        public int UserId { get; set; }
-        public User User { get; set; }
         public int TripId { get; set; }
         public string TripName { get; set; }
         public DateTime StartDate { get; set; }
