@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api.Models
 {
+    [Table("Trips")]
     public class Trip
     {
         public int TripId { get; set; }
@@ -13,5 +14,6 @@ namespace api.Models
         public List<Leg> Legs { get; set; } = new List<Leg>();
         public List<Journal> Journals { get; set; } = new List<Journal>();
         public List<Photo> Photos { get; set; } = new List<Photo>();
+        public List<Portfolio> Portfolios { get; set; } = new List<Portfolio>();
     }
 }

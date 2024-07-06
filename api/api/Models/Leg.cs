@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api.Models
 {
+    [Table("Legs")]
     public class Leg
     {
         public int LegId { get; set; }

@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240704191603_SeedRole")]
-    partial class SeedRole
+    [Migration("20240706162622_PortfolioManyToMany")]
+    partial class PortfolioManyToMany
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6da6e75c-40bb-4e4d-96ff-bae9574622d1",
+                            Id = "b411df72-b4b1-4dec-aa5c-7ebc67cd14cd",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "155189ec-9187-4954-8951-e6785df3ab9b",
+                            Id = "f32c3fef-97ee-44f9-9791-c489e5b87e2c",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -393,6 +393,21 @@ namespace api.Migrations
                     b.ToTable("Photos");
                 });
 
+            modelBuilder.Entity("api.Models.Portfolio", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TripId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUserId", "TripId");
+
+                    b.HasIndex("TripId");
+
+                    b.ToTable("Portfolios");
+                });
+
             modelBuilder.Entity("api.Models.Trip", b =>
                 {
                     b.Property<int>("TripId")
@@ -503,6 +518,30 @@ namespace api.Migrations
                     b.Navigation("Trip");
                 });
 
+            modelBuilder.Entity("api.Models.Portfolio", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "AppUser")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Models.Trip", "Trip")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Trip");
+                });
+
+            modelBuilder.Entity("api.Models.AppUser", b =>
+                {
+                    b.Navigation("Portfolios");
+                });
+
             modelBuilder.Entity("api.Models.Trip", b =>
                 {
                     b.Navigation("Journals");
@@ -510,6 +549,8 @@ namespace api.Migrations
                     b.Navigation("Legs");
 
                     b.Navigation("Photos");
+
+                    b.Navigation("Portfolios");
                 });
 #pragma warning restore 612, 618
         }
