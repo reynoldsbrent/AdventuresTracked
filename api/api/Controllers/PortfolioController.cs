@@ -32,5 +32,44 @@ namespace api.Controllers
 
             return Ok(userPortfolio);
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AddPortfolio(int tripId)
+        {
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+            var trip = await _tripRepository.GetByIdAsync(tripId);
+
+            if (trip == null)
+            {
+                return BadRequest("Trip not found");
+            }
+
+            var userPortfolio = await _portfolioRepository.GetUserPortfolio(appUser);
+
+            if(userPortfolio.Any(e => e.TripId == tripId))
+            {
+                return BadRequest("Cannot add same trip to portfolio");
+            }
+
+            var portfolioModel = new Portfolio
+            {
+                TripId = trip.TripId,
+                AppUserId = appUser.Id,
+
+            };
+
+            await _portfolioRepository.CreateAsync(portfolioModel);
+
+            if(portfolioModel == null)
+            {
+                return StatusCode(500, "Could not create");
+            }
+            else
+            {
+                return Created();
+            }
+        }
     }
 }
