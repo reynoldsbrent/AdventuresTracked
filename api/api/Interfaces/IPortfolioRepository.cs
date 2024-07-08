@@ -6,5 +6,6 @@ namespace api.Interfaces
     {
         Task<List<Trip>> GetUserPortfolio(AppUser user);
         Task<Portfolio> CreateAsync(Portfolio portfolio);
+        Task<Portfolio> DeletePortfolio(AppUser appUser, int tripId);
     }
 }

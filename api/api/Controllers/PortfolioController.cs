@@ -71,5 +71,28 @@ namespace api.Controllers
                 return Created();
             }
         }
+
+        [HttpDelete]
+        [Authorize]
+        public async Task<IActionResult> DeletePortfolio(int tripId)
+        {
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+
+            var userPortfolio = await _portfolioRepository.GetUserPortfolio(appUser);
+
+            var filteredTrip = userPortfolio.Where(t => t.TripId == tripId).ToList();
+
+            if(filteredTrip.Count() == 1)
+            {
+                await _portfolioRepository.DeletePortfolio(appUser, tripId);
+            }
+            else
+            {
+                return BadRequest("Trip is not in your portfolio");
+            }
+
+            return Ok();
+        }
     }
 }
