@@ -1,7 +1,10 @@
 ﻿using api.Dtos.Journal;
+using api.Extensions;
 using api.Interfaces;
 using api.Mappers;
+using api.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -12,10 +15,12 @@ namespace api.Controllers
     {
         private readonly IJournalRepository _journalRepo;
         private readonly ITripRepository _tripRepo;
-        public JournalController(IJournalRepository journalRepo, ITripRepository tripRepo)
+        private readonly UserManager<AppUser> _userManager;
+        public JournalController(IJournalRepository journalRepo, ITripRepository tripRepo, UserManager<AppUser> userManager)
         {
             _journalRepo = journalRepo;
             _tripRepo = tripRepo;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -64,7 +69,12 @@ namespace api.Controllers
                 return BadRequest("Trip does not exist");
             }
 
+            var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+
             var journalModel = journalDto.ToJournalFromCreate(tripId);
+            journalModel.AppUserId = appUser.Id;
+
             await _journalRepo.CreateAsync(journalModel);
             return CreatedAtAction(nameof(GetById), new { id = journalModel.JournalId }, journalModel.ToJournalDto());
         }

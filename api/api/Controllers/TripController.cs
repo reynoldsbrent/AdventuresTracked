@@ -33,7 +33,7 @@ namespace api.Controllers
 
             var trips = await _tripRepo.GetAllAsync(query);
 
-            var tripDto = trips.Select(s => s.ToTripDto());
+            var tripDto = trips.Select(s => s.ToTripDto()).ToList();
 
             return Ok(tripDto);
         }

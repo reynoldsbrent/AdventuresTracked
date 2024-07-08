@@ -39,7 +39,7 @@ namespace api.Repository
 
         public async Task<List<Trip>> GetAllAsync(QueryObject query)
         {
-            var trips = _context.Trips.Include(c => c.Journals).AsQueryable();
+            var trips = _context.Trips.Include(c => c.Journals).ThenInclude(a => a.AppUser).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(query.TripName))
             {
@@ -61,7 +61,7 @@ namespace api.Repository
 
         public async Task<Trip?> GetByIdAsync(int id)
         {
-            return await _context.Trips.Include(c => c.Journals).FirstOrDefaultAsync(i => i.TripId == id);
+            return await _context.Trips.Include(c => c.Journals).ThenInclude(a => a.AppUser).FirstOrDefaultAsync(i => i.TripId == id);
         }
 
         public Task<bool> TripExists(int id)

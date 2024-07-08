@@ -36,12 +36,12 @@ namespace api.Repository
 
         public async Task<List<Journal>> GetAllAsync()
         {
-            return await _context.Journals.ToListAsync();
+            return await _context.Journals.Include(a => a.AppUser).ToListAsync();
         }
 
         public async Task<Journal?> GetByIdAsync(int id)
         {
-            return await _context.Journals.FindAsync(id);
+            return await _context.Journals.Include(a => a.AppUser).FirstOrDefaultAsync(j => j.JournalId == id);
         }
 
         public async Task<Journal?> UpdateAsync(int id, Journal journalModel)

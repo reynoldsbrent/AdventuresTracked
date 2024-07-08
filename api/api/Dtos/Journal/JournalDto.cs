@@ -9,5 +9,6 @@ namespace api.Dtos.Journal
         public string Title { get; set; }
         public string Entry { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string CreatedBy { get; set; } = string.Empty;
     }
 }
