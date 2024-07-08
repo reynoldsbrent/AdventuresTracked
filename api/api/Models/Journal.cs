@@ -12,5 +12,7 @@ namespace api.Models
         public string Title { get; set; }
         public string Entry { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
     }
 }
