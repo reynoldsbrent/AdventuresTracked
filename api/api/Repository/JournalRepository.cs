@@ -1,4 +1,5 @@
 ﻿using api.Data;
+using api.Helpers;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -34,9 +35,16 @@ namespace api.Repository
             return journalModel;
         }
 
-        public async Task<List<Journal>> GetAllAsync()
+        public async Task<List<Journal>> GetAllAsync(JournalQueryObject queryObject)
         {
-            return await _context.Journals.Include(a => a.AppUser).ToListAsync();
+            var journals = _context.Journals.Include(a => a.AppUser).AsQueryable();
+
+            if (queryObject.IsDescending == true)
+            {
+                journals = journals.OrderByDescending(j => j.CreatedAt);
+            }
+
+            return await journals.ToListAsync();
         }
 
         public async Task<Journal?> GetByIdAsync(int id)

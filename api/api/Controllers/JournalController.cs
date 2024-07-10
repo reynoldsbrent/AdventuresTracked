@@ -1,5 +1,6 @@
 ﻿using api.Dtos.Journal;
 using api.Extensions;
+using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
@@ -26,14 +27,14 @@ namespace api.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] JournalQueryObject queryObject)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var journals = await _journalRepo.GetAllAsync();
+            var journals = await _journalRepo.GetAllAsync(queryObject);
 
             var journalDto = journals.Select(s => s.ToJournalDto());
 
