@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="Dtos\Leg\" />
-    <Folder Include="Dtos\Airport\" />
     <Folder Include="Dtos\Photo\" />
   </ItemGroup>
 
