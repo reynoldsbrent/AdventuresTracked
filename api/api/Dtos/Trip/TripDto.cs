@@ -12,7 +12,7 @@ namespace api.Dtos.Trip
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
-        public List<JournalDto> Journals { get; set; }
-        
+        public List<JournalDto> Journals { get; set; } = new List<JournalDto>();
+
     }
 }

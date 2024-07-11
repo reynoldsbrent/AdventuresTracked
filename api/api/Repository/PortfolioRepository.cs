@@ -1,4 +1,6 @@
 ﻿using api.Data;
+using api.Dtos.Journal;
+using api.Dtos.Trip;
 using api.Interfaces;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +38,7 @@ namespace api.Repository
 
         public async Task<List<Trip>> GetUserPortfolio(AppUser user)
         {
+
             return await _context.Portfolios.Where(u => u.AppUserId == user.Id).Select(trip => new Trip
             {
                 TripId = trip.TripId,

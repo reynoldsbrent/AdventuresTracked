@@ -1,4 +1,5 @@
-﻿using api.Models;
+﻿using api.Dtos.Trip;
+using api.Models;
 
 namespace api.Interfaces
 {

@@ -102,6 +102,7 @@ namespace api
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
             builder.Services.AddScoped<IAirportRepository, AirportRepository>();
+            builder.Services.AddScoped<ILegRepository, LegRepository>();
 
             var app = builder.Build();
 
