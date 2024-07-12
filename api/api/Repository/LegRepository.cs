@@ -25,9 +25,18 @@ namespace api.Repository
             return legModel;
         }
 
-        public Task<Leg?> DeleteAsync(int id)
+        public async Task<Leg?> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var legModel = await _context.Legs.FirstOrDefaultAsync(x => x.LegId == id);
+
+            if (legModel == null)
+            {
+                return null;
+            }
+
+            _context.Legs.Remove(legModel);
+            await _context.SaveChangesAsync();
+            return legModel;
         }
 
         public async Task<Leg?> GetLegByIdAsync(int id)

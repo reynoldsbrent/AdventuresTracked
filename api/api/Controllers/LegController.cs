@@ -91,5 +91,23 @@ namespace api.Controllers
 
             return Ok(legModel.ToLegDto());
         }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        [Authorize]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var legModel = await _legRepo.DeleteAsync(id);
+
+            if (legModel == null)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }
