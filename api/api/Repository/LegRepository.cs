@@ -1,5 +1,6 @@
 ﻿using api.Data;
 using api.Dtos.Leg;
+using api.Helpers;
 using api.Interfaces;
 using api.Models;
 using api.Service;
@@ -37,6 +38,22 @@ namespace api.Repository
             _context.Legs.Remove(legModel);
             await _context.SaveChangesAsync();
             return legModel;
+        }
+
+        public async Task<List<Leg>> GetAllAsync(LegQueryObject queryObject)
+        {
+            var legs = _context.Legs.AsQueryable();
+
+            if (queryObject.TripId.HasValue)
+            {
+                legs = legs.Where(l => l.TripId == queryObject.TripId);
+            }
+
+            if (queryObject.IsDescending == true)
+            {
+                legs = legs.OrderByDescending(l => l.DepartureDate);
+            }
+            return await legs.ToListAsync();
         }
 
         public async Task<Leg?> GetLegByIdAsync(int id)

@@ -1,5 +1,6 @@
 ﻿using api.Data;
 using api.Dtos.Leg;
+using api.Helpers;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace api.Controllers
 {
@@ -25,6 +27,20 @@ namespace api.Controllers
             _legRepo = legRepo;
             _tripRepo = tripRepo;
             _airportRepo = airportRepo;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAll([FromQuery] LegQueryObject queryObject)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var legs = await _legRepo.GetAllAsync(queryObject);
+
+            var legDto = legs.Select(l => l.ToLegDto()).ToList();
+
+            return Ok(legDto);
         }
 
         [HttpGet("{id:int}")]
