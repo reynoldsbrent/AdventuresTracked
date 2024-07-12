@@ -2,10 +2,12 @@
 using api.Dtos.Leg;
 using api.Interfaces;
 using api.Mappers;
+using api.Models;
 using api.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Controllers
 {
@@ -70,6 +72,24 @@ namespace api.Controllers
             await _legRepo.CreateAsync(legModel);
 
             return CreatedAtAction(nameof(GetById), new { id = legModel.LegId }, legModel.ToLegDto());
+        }
+
+        [HttpPut]
+        [Route("{id:int}")]
+        [Authorize]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateLegRequestDto updateDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var legModel = await _legRepo.UpdateAsync(id, updateDto);
+
+            if (legModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(legModel.ToLegDto());
         }
     }
 }

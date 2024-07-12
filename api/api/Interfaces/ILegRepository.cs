@@ -10,6 +10,5 @@ namespace api.Interfaces
         Task<Leg?> UpdateAsync(int id, UpdateLegRequestDto legDto);
         Task<Leg?> DeleteAsync(int id);
         Task<bool> LegExists(int id);
-        Task<double> DistanceMiles(int id);
     }
 }
