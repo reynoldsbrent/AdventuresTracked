@@ -3,14 +3,17 @@ import "react-toastify/dist/ReactToastify.css";
 import './App.css';
 import CardList from './Components/CardList/CardList';
 import Search from './Components/Search/Search';
+import { UserProvider } from './Context/useAuth';
 
 function App() {
   return (
-    <div className="App">
+    <>
+    <UserProvider>
      <Search />
      <CardList />
      <ToastContainer />
-    </div>
+     </UserProvider>
+    </>
   );
 }
 
