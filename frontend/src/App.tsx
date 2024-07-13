@@ -4,15 +4,17 @@ import './App.css';
 import CardList from './Components/CardList/CardList';
 import Search from './Components/Search/Search';
 import { UserProvider } from './Context/useAuth';
+import { Outlet } from 'react-router';
 
 function App() {
   return (
     <>
-    <UserProvider>
-     <Search />
-     <CardList />
-     <ToastContainer />
-     </UserProvider>
+      <UserProvider>
+        <Outlet/>
+        <Search />
+        <CardList />
+        <ToastContainer />
+      </UserProvider>
     </>
   );
 }
