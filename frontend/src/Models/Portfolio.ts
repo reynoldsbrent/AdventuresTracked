@@ -1,5 +1,5 @@
 export type PortfolioGet = {
-    id: number;
+    tripId: number;
     tripName: string;
     startDate: string;
     endDate: string;
