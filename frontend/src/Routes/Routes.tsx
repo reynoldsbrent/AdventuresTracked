@@ -4,6 +4,7 @@ import LoginPage from "../Pages/LoginPage/LoginPage";
 import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import CardList from "../Components/CardList/CardList";
 import HomePage from "../Pages/HomePage/HomePage";
+import TripDetailsPage from "../Pages/TripDetailsPage/TripDetailsPage";
 
 
 export const router = createBrowserRouter([
@@ -14,7 +15,8 @@ export const router = createBrowserRouter([
       {path: "", element: <HomePage />},
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
-      {path: "trips", element: <CardList />}
+      {path: "trips", element: <CardList />},
+      {path: "trips/:id", element: <TripDetailsPage />}
     ],
   },
 ]);
