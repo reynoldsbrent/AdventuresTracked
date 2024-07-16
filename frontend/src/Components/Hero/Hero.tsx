@@ -2,6 +2,7 @@ import React from 'react'
 import AdventuresTrackedLogo2 from "./AdventuresTrackedLogo2.svg"
 import AdventuresTrackedLogo3 from "./AdventuresTrackedLogo3.png"
 import AdventuresTrackedLogo4 from "./AdventuresTrackedLogo4.svg"
+import { Link } from 'react-router-dom'
 
 type Props = {}
 
@@ -21,7 +22,7 @@ const Hero = (props: Props) => {
             <h1 className="text-4xl lg:text-6xl font-bold">Plan your next<span className="text-blue-700"> adventure</span> all in one spot</h1>
             <div className="w-20 h-2 bg-blue-700 my-4"></div>
             <p className="text-xl mb-10"></p>
-            <button className="bg-blue-500 text-white text-2xl font-medium px-4 py-2 rounded shadow">Learn More</button>
+            <Link to="/trips" className="bg-blue-500 text-white text-2xl font-medium px-4 py-2 rounded shadow">Get Started</Link>
           </div>
         </header>
       </div>
