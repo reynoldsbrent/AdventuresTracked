@@ -47,10 +47,13 @@ export const UserProvider = ({ children } : Props) => {
                 localStorage.setItem("user", JSON.stringify(userObj));
                 setToken(res?.data.token!);
                 setUser(userObj!);
-                toast.success("Login Successful!");
                 navigate("/trips");
             }
         }).catch((e) => toast.warning("Server error occured"));
+    };
+
+    const setAuthHeader = (token: string | null) => {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     };
 
     const loginUser = async (username: string, password: string) => {
@@ -65,8 +68,14 @@ export const UserProvider = ({ children } : Props) => {
                 localStorage.setItem("user", JSON.stringify(userObj));
                 setToken(res?.data.token!);
                 setUser(userObj!);
-                toast.success("Login Successful!");
-                navigate("/trips");
+                setAuthHeader(res.data.token);
+                if(isReady){
+                    navigate("/trips");
+                }
+                 
+               
+                
+                 
             }
         }).catch((e) => toast.warning("Server error occured"));
     };
@@ -84,7 +93,7 @@ export const UserProvider = ({ children } : Props) => {
     };
 
     return (
-        <UserContext.Provider value = {{loginUser, user,  token, logout, isLoggedIn, registerUser}}>
+        <UserContext.Provider value = {{loginUser, user, token, logout, isLoggedIn, registerUser}}>
             {isReady ? children : null}
         </UserContext.Provider>
     );

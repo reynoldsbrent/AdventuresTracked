@@ -9,8 +9,8 @@ type Props = {
 
 const ListPortfolio = ({portfolioValues}: Props) => {
   return (
-    <section id="portfolio">
-      <h2 className="mb-3 mt-3 text-3xl font-semibold text-center md:text-4xl">
+    <section id="portfolio">  
+      <h2 className="mb-3 mt-3 text-3xl flex justify-center font-semibold md:text-4xl">
         Your Trips
       </h2>
       <div className=" flex-col  max-w-5xl mx-auto space-y-10 px-10 mb-5  ">

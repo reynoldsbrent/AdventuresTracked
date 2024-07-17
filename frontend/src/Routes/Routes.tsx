@@ -5,6 +5,7 @@ import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import CardList from "../Components/CardList/CardList";
 import HomePage from "../Pages/HomePage/HomePage";
 import TripDetailsPage from "../Pages/TripDetailsPage/TripDetailsPage";
+import ProtectedRoute from "./ProtectedRoute";
 
 
 export const router = createBrowserRouter([
@@ -15,7 +16,7 @@ export const router = createBrowserRouter([
       {path: "", element: <HomePage />},
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
-      {path: "trips", element: <CardList />},
+      {path: "trips", element:<ProtectedRoute> <CardList /></ProtectedRoute>},
       {path: "trips/:id", element: <TripDetailsPage />}
     ],
   },
