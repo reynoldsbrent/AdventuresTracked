@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
       {path: "trips", element:<ProtectedRoute> <CardList /></ProtectedRoute>},
-      {path: "trips/:id", element: <TripDetailsPage />}
+      {path: "trips/:tripId", element: <TripDetailsPage />}
     ],
   },
 ]);
