@@ -26,7 +26,7 @@ const LegForm = ({tripId, handleLeg}: Props) => {
     const { register, handleSubmit, formState: { errors }} = useForm<LegFormInputs>({ resolver: yupResolver(validation)});
 
   return (
-    <form className="mt-4 ml-4 mr-4 flex:0.5" onSubmit={handleSubmit(handleLeg)}>
+    <form className="mt-4 ml-4 mr-4 mb-4 flex:0.5" onSubmit={handleSubmit(handleLeg)}>
       <input
         type="text"
         id="title"

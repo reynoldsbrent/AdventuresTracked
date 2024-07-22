@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import LegForm from './LegForm/LegForm';
-import { legPostAPI } from '../../Services/LegService';
+import { legGetAPI, legPostAPI } from '../../Services/LegService';
 import { toast } from 'react-toastify';
+import { LegGet } from '../../Models/Leg';
+import LegList from '../LegList/LegList';
 
 type Props = {
     tripId: number;
@@ -15,17 +17,34 @@ type LegFormInputs = {
 };
 
 const Leg = ({tripId}: Props) => {
+    const [legs, setLeg] = useState<LegGet[] | null>(null);
+
+    useEffect(() => {
+       getLegs(); 
+    }, []);
+
     const handleLeg = (e: LegFormInputs) => {
         legPostAPI(tripId, e.departureAirportId, e.arrivalAirportId, e.departureDate, e.arrivalDate).then((res) => {
             if(res) {
                 toast.success("Leg created successfully!")
+                getLegs();
             }
         }).catch((e) => {
             toast.warning(e);
+        });
+    };
+
+    const getLegs = () => {
+        legGetAPI(tripId).then((res) => {
+            setLeg(res?.data!);
         })
-    }
+    };
+
   return (
-    <LegForm tripId={tripId} handleLeg={handleLeg}/>
+    <div className="flex flex-col">
+        <LegList legs={legs!} />
+        <LegForm tripId={tripId} handleLeg={handleLeg}/>
+    </div>
   )
 }
 
