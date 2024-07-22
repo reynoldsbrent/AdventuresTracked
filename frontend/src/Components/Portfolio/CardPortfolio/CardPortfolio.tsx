@@ -34,6 +34,8 @@ const CardPortfolio = ({portfolioValue}: Props) => {
         <p>Start Date: {portfolioValue.startDate}</p>
         <p>End Date: {portfolioValue.endDate}</p>
     </Link>
+    <p className="float-left mr-5 hover:text-gray-500">Edit</p>
+    <p className="float-left hover:text-red-500">Delete</p>
     </div>
   )
 }

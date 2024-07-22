@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { LegGet } from '../../Models/Leg';
 import { legGetAPI } from '../../Services/LegService';
+import TripDetail from '../../Components/TripDetail/TripDetail';
+import Leg from '../../Components/Leg/Leg';
 
 type Props = {}
 
@@ -10,21 +12,10 @@ const TripDetailsPage = (props: Props) => {
   const [leg, setLeg] = useState<LegGet>();
   const numericTripId = Number(tripId);
 
-  useEffect(() => {
-    const  getLegInit = async () => {
-      const result = await legGetAPI(numericTripId);
-      setLeg(result?.data[0]);
-    }
-    getLegInit();
-  }, [])
-
   return (
     <>
-    {leg ? (
-      <div>{leg.tripId}</div>
-    ) : (
-      <div>Leg not found</div>
-    )}
+    <TripDetail></TripDetail>
+    <Leg tripId={numericTripId} />
     </>
   )
 }

@@ -8,3 +8,11 @@ export type LegGet = {
     distanceMiles: number;
     createdAt: string;
 }
+
+export type LegPost = {
+    tripId: number;
+    departureAirportId: string;
+    arrivalAirportId: string;
+    departureDate: string;
+    arrivalDate: string;
+}

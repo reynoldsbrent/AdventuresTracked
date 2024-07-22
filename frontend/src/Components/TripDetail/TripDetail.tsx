@@ -20,7 +20,7 @@ const TripDetail = (props: Props) => {
   return (
     <>
     {leg ? (
-      <div>{leg.tripId}</div>
+      <div>{leg.tripId} - {leg.distanceMiles}</div>
     ) : (
       <div>Leg not found</div>
     )}
