@@ -17,6 +17,7 @@ const TripDetailsPage = (props: Props) => {
     <>
     <h2 className="mb-3 mt-3 text-3xl flex justify-center font-semibold md:text-4xl">Trip Legs</h2>
     <Leg tripId={numericTripId} />
+    <h2 className="mb-3 mt-3 text-3xl flex justify-center font-semibold md:text-4xl">Trip Journals</h2>
     <Journal tripId={numericTripId} />
     </>
   )

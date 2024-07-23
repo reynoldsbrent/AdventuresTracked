@@ -1,5 +1,5 @@
 import axios from "axios";
-import { JournalPost } from "../Models/Journal";
+import { JournalGet, JournalPost } from "../Models/Journal";
 import { handleError } from "../Helpers/ErrorHandler";
 
 const api = "https://localhost:7160/api/Journal/"
@@ -14,6 +14,17 @@ export const journalPostAPI = async (
             title: title,
             entry: entry
         });
+        return data;
+    } catch (error){
+        handleError(error);
+    }
+};
+
+export const journalGetAPI = async (
+    tripId: number,
+) => {
+    try {
+        const data = await axios.get<JournalGet[]>(api + `?TripId=${tripId}`);
         return data;
     } catch (error){
         handleError(error);
