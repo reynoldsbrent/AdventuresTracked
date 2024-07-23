@@ -45,7 +45,10 @@ namespace api.Repository
                 TripName = trip.Trip.TripName,
                 StartDate = trip.Trip.StartDate,
                 EndDate = trip.Trip.EndDate,
-                CreatedAt = trip.Trip.CreatedAt
+                CreatedAt = trip.Trip.CreatedAt,
+                Journals = trip.Trip.Journals,
+                Legs = trip.Trip.Legs,
+                Photos = trip.Trip.Photos
             }).ToListAsync();
         }
     }

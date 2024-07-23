@@ -39,6 +39,11 @@ namespace api.Repository
         {
             var journals = _context.Journals.Include(a => a.AppUser).AsQueryable();
 
+            if (queryObject.TripId.HasValue)
+            {
+                journals = journals.Where(l => l.TripId == queryObject.TripId);
+            }
+
             if (queryObject.IsDescending == true)
             {
                 journals = journals.OrderByDescending(j => j.CreatedAt);
