@@ -26,7 +26,7 @@ const Leg = ({tripId}: Props) => {
     const handleLeg = (e: LegFormInputs) => {
         legPostAPI(tripId, e.departureAirportId, e.arrivalAirportId, e.departureDate, e.arrivalDate).then((res) => {
             if(res) {
-                toast.success("Leg created successfully!")
+                toast.success("Leg created")
                 getLegs();
             }
         }).catch((e) => {
