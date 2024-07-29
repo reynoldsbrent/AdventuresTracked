@@ -34,3 +34,14 @@ export const legPostAPI = async (
         handleError(error);
     }
 };
+
+export const legDeleteAPI = async (
+    tripId: number
+) => {
+    try {
+        const data = await axios.delete<LegPost[]>(api + `?TripId=${tripId}`);
+        return data;
+    } catch (error){
+        handleError(error);
+    }
+};

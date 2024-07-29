@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../Card/Card'
 import { PortfolioGet } from '../../Models/Portfolio';
-import { portfolioGetApi } from '../../Services/PortfolioService';
+import { portfolioDeleteApi, portfolioGetApi } from '../../Services/PortfolioService';
 import axios, { AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import ListPortfolio from '../Portfolio/ListPortfolio/ListPortfolio';
@@ -25,6 +25,16 @@ const CardList: React.FC<Props> = (props: Props) : JSX.Element => {
     })
   };
 
+  const onPortfolioDelete = (e: any) => {
+    e.preventDefault();
+    portfolioDeleteApi(e.target[0].value).then((res) => {
+      if(res?.status == 200) {
+        toast.success("Trip Deleted");
+        getPortfolio();
+      }
+    })
+  };
+
   useEffect(() => {
     getPortfolio();
   }, []);
@@ -32,7 +42,7 @@ const CardList: React.FC<Props> = (props: Props) : JSX.Element => {
   return (
     <div>
         <button className="mr-5 flex-1 bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg float-right">+ Add</button>
-        <ListPortfolio portfolioValues={portfolioValues!} />
+        <ListPortfolio portfolioValues={portfolioValues!} onPortfolioDelete={onPortfolioDelete}/>
     </div>
 );
 }

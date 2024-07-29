@@ -15,7 +15,7 @@ export const portfolioAddApi = async (id: number) => {
 
 export const portfolioDeleteApi = async (id: number) => {
     try{
-        const data = await axios.delete<PortfolioPost>(api + `?id=${id}`);
+        const data = await axios.delete<PortfolioPost>(api + `?tripId=${id}`);
         return data;
     }catch (error){
         handleError(error);

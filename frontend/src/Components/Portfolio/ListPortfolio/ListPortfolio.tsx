@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 
 type Props = {
     portfolioValues: PortfolioGet[];
+    onPortfolioDelete: (e: SyntheticEvent) => void;
 }
 
-const ListPortfolio = ({portfolioValues}: Props) => {
+const ListPortfolio = ({portfolioValues, onPortfolioDelete}: Props) => {
   return (
     <section id="portfolio">  
       <h2 className="mb-3 mt-3 text-3xl flex justify-center font-semibold md:text-4xl">
@@ -19,7 +20,7 @@ const ListPortfolio = ({portfolioValues}: Props) => {
             portfolioValues.map((portfolioValue) => {
               return (
                 <CardPortfolio
-                  portfolioValue={portfolioValue}
+                  portfolioValue={portfolioValue} onPortfolioDelete={onPortfolioDelete}
                 />
               );
             })
