@@ -18,8 +18,14 @@ type LegFormInputs = {
 const validation = Yup.object().shape({
     departureAirportId: Yup.string().required("Departure Airport Id is required"),
     arrivalAirportId: Yup.string().required("Arrival Airport Id is required"),
-    departureDate: Yup.string().required("Departure Date is required"),
-    arrivalDate: Yup.string().required("Arrival Date is required"),
+    departureDate: Yup.string().required("Departure Date is required").matches(
+      /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}$/,
+      "Departure Date must be in the format MM/DD/YYYY"
+  ),
+    arrivalDate: Yup.string().required("Arrival Date is required").matches(
+      /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}$/,
+      "Arrival Date must be in the format MM/DD/YYYY"
+  ),
 });
 
 const LegForm = ({tripId, handleLeg}: Props) => {
@@ -47,7 +53,7 @@ const LegForm = ({tripId, handleLeg}: Props) => {
         type="text"
         id="title"
         className="mb-3 bg-slate-100 border border-gray-300 text-black sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-60 p-2.5"
-        placeholder="Departure Date - Ex: 7/21/2024"
+        placeholder="Departure Date - Ex: 07/21/2024"
         {...register("departureDate")}
       />
       {errors.departureDate ? <p>{errors.departureDate.message}</p> : ""}
