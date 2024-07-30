@@ -13,7 +13,7 @@ const LegListItem = ({ leg, onLegDelete }: Props) => {
       <div className="relative flex gap-4">
         <div className="flex flex-col w-full">
           <div className="flex flex-row justify-between">
-            <p className="relative text-blue-700 text-xl whitespace-nowrap truncate overflow-hidden">
+            <p className="relative text-blue-700 text-xl text-transform: uppercase whitespace-nowrap truncate overflow-hidden">
               {leg.departureAirportId} - {leg.arrivalAirportId}
             </p>
           </div>

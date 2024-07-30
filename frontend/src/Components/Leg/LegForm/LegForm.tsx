@@ -16,8 +16,8 @@ type LegFormInputs = {
 };
 
 const validation = Yup.object().shape({
-    departureAirportId: Yup.string().required("Departure Airport Id is required"),
-    arrivalAirportId: Yup.string().required("Arrival Airport Id is required"),
+    departureAirportId: Yup.string().required("Departure Airport Id is required").matches(/^[A-Za-z]{4}$/, "Departure Airport Id must be exactly 4 letters"),
+    arrivalAirportId: Yup.string().required("Arrival Airport Id is required").matches(/^[A-Za-z]{4}$/, "Arrival Airport Id must be exactly 4 letters"),
     departureDate: Yup.string().required("Departure Date is required").matches(
       /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d{2}$/,
       "Departure Date must be in the format MM/DD/YYYY"
