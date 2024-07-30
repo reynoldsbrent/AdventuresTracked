@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import LegForm from './LegForm/LegForm';
-import { legGetAPI, legPostAPI } from '../../Services/LegService';
+import { legDeleteAPI, legGetAPI, legPostAPI } from '../../Services/LegService';
 import { toast } from 'react-toastify';
 import { LegGet } from '../../Models/Leg';
 import LegList from '../LegList/LegList';
@@ -40,9 +40,19 @@ const Leg = ({tripId}: Props) => {
         })
     };
 
+    const onLegDelete = (e: any) => {
+        e.preventDefault();
+        legDeleteAPI(e.target[0].value).then((res) => {
+            if(res?.status == 200) {
+              toast.success("Leg Deleted");
+              getLegs();
+            }
+          })
+    }
+
   return (
     <div className="flex flex-col">
-        <LegList legs={legs!} />
+        <LegList legs={legs!} onLegDelete={onLegDelete}/>
         <LegForm tripId={tripId} handleLeg={handleLeg}/>
     </div>
   )

@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { SyntheticEvent } from 'react'
 import { LegGet } from '../../Models/Leg';
+import DeleteLeg from '../Leg/DeleteLeg/DeleteLeg';
 
 type Props = {
     leg: LegGet;
+    onLegDelete: (e: SyntheticEvent) => void;
 }
 
-const LegListItem = ({ leg }: Props) => {
+const LegListItem = ({ leg, onLegDelete }: Props) => {
   return (
     <div className="relative grid grid-cols-1 gap-4 ml-4 mr-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
       <div className="relative flex gap-4">
@@ -19,7 +21,7 @@ const LegListItem = ({ leg }: Props) => {
           <p className="text-dark text-sm">Arrival Date: {leg.arrivalDate}</p>
           <p className="text-dark text-sm">Miles traveled: {leg.distanceMiles}</p>
           <p className="float-left hover:text-gray-500">Edit</p>
-          <p className="float-right hover:text-red-500">Delete</p>
+          <DeleteLeg onLegDelete={onLegDelete} legValue={leg.legId}/>
         </div>
       </div>
     </div>

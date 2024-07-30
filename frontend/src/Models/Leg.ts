@@ -16,3 +16,7 @@ export type LegPost = {
     departureDate: string;
     arrivalDate: string;
 }
+
+export type LegDelete = {
+    id: number;
+}

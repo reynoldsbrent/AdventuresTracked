@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LegGet, LegPost } from "../Models/Leg";
+import { LegDelete, LegGet, LegPost } from "../Models/Leg";
 import { handleError } from "../Helpers/ErrorHandler";
 
 const api = "https://localhost:7160/api/Leg/";
@@ -36,10 +36,10 @@ export const legPostAPI = async (
 };
 
 export const legDeleteAPI = async (
-    tripId: number
+    id: number
 ) => {
     try {
-        const data = await axios.delete<LegPost[]>(api + `?TripId=${tripId}`);
+        const data = await axios.delete<LegDelete[]>(api + `${id}`);
         return data;
     } catch (error){
         handleError(error);
