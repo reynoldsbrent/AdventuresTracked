@@ -10,17 +10,27 @@ type Props = {
 
 const CardPortfolio = ({portfolioValue, onPortfolioDelete}: Props) => {
   return (
-    <div className="bg-gray-100 flex-col w-full p-20 space-y-50 hover:bg-slate-100 text-center rounded-lg shadow-lg md:w-1/0.5">
-
-    <Link to={`/trips/${portfolioValue.tripId}`} >
-        {portfolioValue.tripName} 
-        <p>Trip ID: {portfolioValue.tripId}</p> 
-        <p>Start Date: {portfolioValue.startDate}</p>
-        <p>End Date: {portfolioValue.endDate}</p>
+    <div className="bg-gray-100 flex overflow-hidden w-full hover:bg-slate-100 rounded-lg shadow-lg md:w-1/0.5">
+  <div className="flex-grow p-6 space-y-2 text-left">
+    <Link to={`/trips/${portfolioValue.tripId}`} className="block">
+      <h2 className="text-xl font-bold">{portfolioValue.tripName}</h2>
+      <p>Trip ID: {portfolioValue.tripId}</p> 
+      <p>Start Date: {portfolioValue.startDate}</p>
+      <p>End Date: {portfolioValue.endDate}</p>
     </Link>
-    <p className="float-left mr-5 hover:text-gray-500">Edit</p>
-    <DeletePortfolio onPortfolioDelete={onPortfolioDelete} portfolioValue={portfolioValue.tripId}/>
+    <div className="flex mt-4">
+      <p className="mr-5 hover:text-gray-500 cursor-pointer">Edit</p>
+      <DeletePortfolio onPortfolioDelete={onPortfolioDelete} portfolioValue={portfolioValue.tripId}/>
     </div>
+  </div>
+  <div className="w-1/3 flex-shrink-0 overflow-hidden rounded-l-md">
+    <img 
+      className="h-full w-full object-cover"
+      src="https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?q=80&w=2338&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+      alt="Trip"
+    />
+  </div>
+</div>
   )
 }
 
