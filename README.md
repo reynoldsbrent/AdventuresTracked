@@ -21,4 +21,4 @@ View the project plan here for AdventuresTracked here: https://github.com/reynol
 
 ![Home Page](https://github.com/reynoldsbrent/AdventuresTracked/blob/main/HomePage.png?raw=true)
 
-![Trip List](https://github.com/reynoldsbrent/AdventuresTracked/blob/main/TripList.png?raw=true)
+![Trip List](https://github.com/reynoldsbrent/AdventuresTracked/blob/main/TripListScreenshot.png?raw=true)
