@@ -12,3 +12,7 @@ export type JournalPost = {
     title: string;
     entry: string;
 }
+
+export type JournalDelete = {
+    id: number;
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import JournalForm from './JournalForm/JournalForm';
-import { journalGetAPI, journalPostAPI } from '../../Services/JournalService';
+import { journalDeleteAPI, journalGetAPI, journalPostAPI } from '../../Services/JournalService';
 import { toast } from 'react-toastify';
 import { JournalGet } from '../../Models/Journal';
 import JournalList from '../JournalList/JournalList';
@@ -38,9 +38,19 @@ const Journal = ({tripId}: Props) => {
         });
     };
 
+    const onJournalDelete = (e: any) => {
+        e.preventDefault();
+        journalDeleteAPI(e.target[0].value).then((res) => {
+            if(res?.status == 200) {
+              toast.success("Journal Deleted");
+              getJournals();
+            }
+          })
+    }
+
   return (
     <div className="flex flex-col">
-    <JournalList journals={journals!} />
+    <JournalList journals={journals!} onJournalDelete={onJournalDelete}/>
     <JournalForm tripId={tripId} handleJournal={handleJournal}/>
     </div>
   )
