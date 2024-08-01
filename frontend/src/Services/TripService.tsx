@@ -20,3 +20,21 @@ export const tripAddAPI = async (
         handleError(error);
     }
 };
+
+export const tripEditAPI = async (
+    id: number,
+    tripName: string,
+    startDate: string,
+    endDate: string
+) => {
+    try {
+        const response = await axios.put<TripPost>(api + `${id}`, {
+            tripName: tripName,
+            startDate: startDate,
+            endDate: endDate,
+        });
+        return response.data;
+    } catch (error) {
+        handleError(error);
+    }
+};

@@ -1,6 +1,7 @@
 import React, { SyntheticEvent } from 'react'
 import { JournalGet } from '../../Models/Journal';
 import DeleteJournal from '../Journal/DeleteJournal/DeleteJournal';
+import { DateFormatService } from '../../Services/DateFormatService';
 
 type Props = {
     journal: JournalGet;
@@ -17,6 +18,7 @@ const JournalListItem = ({ journal, onJournalDelete }: Props) => {
               {journal.title}
             </p>
           </div>
+          <p className="className=-mt-4 text-gray-500">{DateFormatService(journal.createdAt)}</p>
           <p className="className=-mt-4 text-gray-500">{journal.entry}</p>
           <p className="float-left hover:text-gray-500">Edit</p>
           <DeleteJournal onJournalDelete={onJournalDelete} journalValue={journal.journalId} />

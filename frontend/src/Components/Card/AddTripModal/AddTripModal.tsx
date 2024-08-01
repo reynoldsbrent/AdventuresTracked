@@ -2,11 +2,14 @@ import React from 'react'
 import * as Yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from 'react-hook-form';
+import { PortfolioGet } from '../../../Models/Portfolio';
+import { DateFormatService } from '../../../Services/DateFormatService';
 
 type Props = {
     isOpen: boolean;
     onClose: () => void;
     handleTrip: (e: TripFormInputs) => void;
+    editingTrip: PortfolioGet | null;
 };
 
 type TripFormInputs = {
@@ -27,10 +30,31 @@ const validation = Yup.object().shape({
     ),
 });
 
-const AddTripModal = ({ isOpen, onClose, handleTrip }: Props) => {
+const AddTripModal = ({ isOpen, onClose, handleTrip, editingTrip }: Props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<TripFormInputs>({ 
-        resolver: yupResolver(validation)
+        resolver: yupResolver(validation),
+        defaultValues: editingTrip ? {
+            tripName: editingTrip.tripName,
+            startDate: editingTrip.startDate,
+            endDate: editingTrip.endDate
+        } : {}
     });
+
+    React.useEffect(() => {
+        if (editingTrip) {
+            reset({
+                tripName: editingTrip.tripName,
+                startDate: DateFormatService(editingTrip.startDate),
+                endDate: DateFormatService(editingTrip.endDate)
+            });
+        } else {
+            reset({
+                tripName: '',
+                startDate: '',
+                endDate: ''
+            });
+        }
+    }, [editingTrip, reset]);
 
     const onSubmit = (data: TripFormInputs) => {
         handleTrip(data);
@@ -43,7 +67,7 @@ const AddTripModal = ({ isOpen, onClose, handleTrip }: Props) => {
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-6 rounded-lg">
-                <h2 className="text-xl font-bold mb-4">Add New Trip</h2>
+                <h2 className="text-xl font-bold mb-4">{editingTrip ? 'Edit Trip' : 'Add New Trip'}</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <input
                         type="text"
@@ -81,7 +105,7 @@ const AddTripModal = ({ isOpen, onClose, handleTrip }: Props) => {
                             type="submit"
                             className="px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800"
                         >
-                            Add Trip
+                            {editingTrip ? 'Save Changes' : 'Add Trip'}
                         </button>
                     </div>
                 </form>
