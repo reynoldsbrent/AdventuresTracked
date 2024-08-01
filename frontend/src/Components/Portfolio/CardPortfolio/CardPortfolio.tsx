@@ -2,6 +2,7 @@ import React, { SyntheticEvent } from 'react'
 import { PortfolioGet } from '../../../Models/Portfolio';
 import { Link } from 'react-router-dom';
 import DeletePortfolio from '../DeletePortfolio/DeletePortfolio';
+import { DateFormatService } from '../../../Services/DateFormatService';
 
 type Props = {
     portfolioValue: PortfolioGet;
@@ -15,8 +16,8 @@ const CardPortfolio = ({portfolioValue, onPortfolioDelete}: Props) => {
     <Link to={`/trips/${portfolioValue.tripId}`} className="block">
       <h2 className="text-xl font-bold">{portfolioValue.tripName}</h2>
       <p>Trip ID: {portfolioValue.tripId}</p> 
-      <p>Start Date: {portfolioValue.startDate}</p>
-      <p>End Date: {portfolioValue.endDate}</p>
+      <p>Start Date: {DateFormatService(portfolioValue.startDate)}</p>
+      <p>End Date: {DateFormatService(portfolioValue.endDate)}</p>
     </Link>
     <div className="flex mt-4">
       <p className="mr-5 hover:text-gray-500 cursor-pointer">Edit</p>

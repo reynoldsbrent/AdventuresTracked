@@ -1,6 +1,7 @@
 import React, { SyntheticEvent } from 'react'
 import { LegGet } from '../../Models/Leg';
 import DeleteLeg from '../Leg/DeleteLeg/DeleteLeg';
+import { DateFormatService } from '../../Services/DateFormatService';
 
 type Props = {
     leg: LegGet;
@@ -17,8 +18,8 @@ const LegListItem = ({ leg, onLegDelete }: Props) => {
               {leg.departureAirportId} - {leg.arrivalAirportId}
             </p>
           </div>
-          <p className="text-dark text-sm">Departure Date: {leg.departureDate}</p>
-          <p className="text-dark text-sm">Arrival Date: {leg.arrivalDate}</p>
+          <p className="text-dark text-sm">Departure Date: {DateFormatService(leg.departureDate)}</p>
+          <p className="text-dark text-sm">Arrival Date: {DateFormatService(leg.arrivalDate)}</p>
           <p className="text-dark text-sm">Miles traveled: {leg.distanceMiles}</p>
           <p className="float-left hover:text-gray-500">Edit</p>
           <DeleteLeg onLegDelete={onLegDelete} legValue={leg.legId}/>
