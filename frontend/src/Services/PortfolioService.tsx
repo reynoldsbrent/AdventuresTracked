@@ -4,9 +4,9 @@ import { handleError } from "../Helpers/ErrorHandler";
 
 const api = "https://localhost:7160/api/portfolio/"
 
-export const portfolioAddApi = async (id: number) => {
+export const portfolioAddApi = async (tripId: number) => {
     try{
-        const data = await axios.post<PortfolioPost>(api + `?id=${id}`);
+        const data = await axios.post<PortfolioPost>(api + `?tripId=${tripId}`);
         return data;
     }catch (error){
         handleError(error);
