@@ -14,12 +14,23 @@ const TripDetailsPage = (props: Props) => {
   const numericTripId = Number(tripId);
 
   return (
-    <>
-    <h2 className="mb-3 mt-3 text-3xl flex justify-center font-semibold md:text-4xl">Trip Legs</h2>
-    <Leg tripId={numericTripId} />
-    <h2 className="mb-3 mt-3 text-3xl flex justify-center font-semibold md:text-4xl">Trip Journals</h2>
-    <Journal tripId={numericTripId} />
-    </>
+    <div className="container mx-auto px-4 py-8">
+      <h2 className="text-4xl font-bold text-center mb-8 text-gray-800">Trip Details</h2>
+      
+      <div className="bg-white shadow-xl rounded-lg overflow-hidden">
+        <div className="p-6">
+          <h3 className="text-2xl font-semibold mb-4 text-gray-800">Trip Legs</h3>
+          <Leg tripId={numericTripId} />
+        </div>
+        
+        <div className="border-t border-gray-200"></div>
+        
+        <div className="p-6">
+          <h3 className="text-2xl font-semibold mb-4 text-gray-800">Trip Journals</h3>
+          <Journal tripId={numericTripId} />
+        </div>
+      </div>
+    </div>
   )
 }
 

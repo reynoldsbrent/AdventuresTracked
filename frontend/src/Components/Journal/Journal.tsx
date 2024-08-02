@@ -4,6 +4,7 @@ import { journalDeleteAPI, journalGetAPI, journalPostAPI } from '../../Services/
 import { toast } from 'react-toastify';
 import { JournalGet } from '../../Models/Journal';
 import JournalList from '../JournalList/JournalList';
+import JournalModal from './JournalModal/JournalModal';
 
 type Props = {
     tripId: number;
@@ -16,6 +17,7 @@ type JournalFormInputs = {
 
 const Journal = ({tripId}: Props) => {
     const [ journals, setJournals] = useState<JournalGet[] | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         getJournals();
@@ -26,6 +28,7 @@ const Journal = ({tripId}: Props) => {
             if(res) {
                 toast.success("Journal created")
                 getJournals();
+                setIsModalOpen(false);
             }
         }).catch((e) => {
             toast.warning(e);
@@ -50,8 +53,19 @@ const Journal = ({tripId}: Props) => {
 
   return (
     <div className="flex flex-col">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Add Journal
+        </button>
     <JournalList journals={journals!} onJournalDelete={onJournalDelete}/>
-    <JournalForm tripId={tripId} handleJournal={handleJournal}/>
+    <JournalModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          tripId={tripId}
+          handleJournal={handleJournal}
+        />
     </div>
   )
 }

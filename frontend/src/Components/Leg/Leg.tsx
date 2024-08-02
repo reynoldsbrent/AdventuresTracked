@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import LegForm from './LegForm/LegForm';
 import { legDeleteAPI, legGetAPI, legPostAPI } from '../../Services/LegService';
 import { toast } from 'react-toastify';
 import { LegGet } from '../../Models/Leg';
 import LegList from '../LegList/LegList';
+import LegModal from './LegModal/LegModal';
 
 type Props = {
     tripId: number;
@@ -18,6 +18,7 @@ type LegFormInputs = {
 
 const Leg = ({tripId}: Props) => {
     const [legs, setLeg] = useState<LegGet[] | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
        getLegs(); 
@@ -28,6 +29,7 @@ const Leg = ({tripId}: Props) => {
             if(res) {
                 toast.success("Leg created")
                 getLegs();
+                setIsModalOpen(false);
             }
         }).catch((e) => {
             toast.warning(e);
@@ -52,8 +54,19 @@ const Leg = ({tripId}: Props) => {
 
   return (
     <div className="flex flex-col">
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Add Leg
+        </button>
         <LegList legs={legs!} onLegDelete={onLegDelete}/>
-        <LegForm tripId={tripId} handleLeg={handleLeg}/>
+        <LegModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          tripId={tripId}
+          handleLeg={handleLeg}
+        />
     </div>
   )
 }

@@ -45,3 +45,23 @@ export const legDeleteAPI = async (
         handleError(error);
     }
 };
+
+export const legEditAPI = async (
+    id: number,
+    departureAirportId: string,
+    arrivalAirportId: string,
+    departureDate: string,
+    arrivalDate: string
+) => {
+    try {
+        const response = await axios.put<LegPost>(api + `${id}`, {
+            departureAirportId: departureAirportId,
+            arrivalAirportId: arrivalAirportId,
+            departureDate: departureDate,
+            arrivalDate: arrivalDate
+        });
+        return response.data;
+    } catch (error) {
+        handleError(error);
+    }
+};
