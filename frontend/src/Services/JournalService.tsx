@@ -41,3 +41,19 @@ export const journalDeleteAPI = async (
         handleError(error);
     }
 };
+
+export const journalEditAPI = async (
+    id: number,
+    title: string,
+    entry: string
+) => {
+    try {
+        const response = await axios.put<JournalPost>(api + `${id}`, {
+            title: title,
+            entry: entry
+        });
+        return response.data;
+    } catch (error) {
+        handleError(error);
+    }
+};

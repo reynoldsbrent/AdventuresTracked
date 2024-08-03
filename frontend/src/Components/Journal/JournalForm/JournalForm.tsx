@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as Yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from 'react-hook-form';
+import { JournalGet } from '../../../Models/Journal';
 
 type Props = {
     tripId: number;
     handleJournal: (e: JournalFormInputs) => void;
+    initialData: JournalGet | null;
+    
 };
 
 type JournalFormInputs = {
@@ -18,9 +21,17 @@ const validation = Yup.object().shape({
     entry: Yup.string().required("Entry is required")
 });
 
-const JournalForm = ({tripId, handleJournal}: Props) => {
+const JournalForm = ({tripId, handleJournal, initialData}: Props) => {
     
-    const { register, handleSubmit, formState: { errors }} = useForm<JournalFormInputs>({ resolver: yupResolver(validation)});
+    const { register, handleSubmit, formState: { errors }, reset} = useForm<JournalFormInputs>({ resolver: yupResolver(validation), defaultValues: initialData || {} });
+
+    useEffect(() => {
+      if (initialData) {
+          reset(initialData);
+      } else {
+          reset({ title: '', entry: '' });
+      }
+  }, [initialData, reset]);
 
     return (
       <form className="mt-4 flex flex-col" onSubmit={handleSubmit(handleJournal)}>
@@ -41,11 +52,11 @@ const JournalForm = ({tripId, handleJournal}: Props) => {
         ></textarea>
         {errors.entry ? <p>{errors.entry.message}</p> : ""}
         <button
-          type="submit"
-          className="mt-4 inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
-        >
-          Add Journal
-        </button>
+                type="submit"
+                className="mt-4 inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+            >
+                {initialData ? 'Update Journal' : 'Add Journal'}
+            </button>
       </form>
     )
 }

@@ -6,9 +6,10 @@ import { DateFormatService } from '../../Services/DateFormatService';
 type Props = {
     journal: JournalGet;
     onJournalDelete: (e: SyntheticEvent) => void;
+    onJournalEdit: (journal: JournalGet) => void;
 }
 
-const JournalListItem = ({ journal, onJournalDelete }: Props) => {
+const JournalListItem = ({ journal, onJournalDelete, onJournalEdit }: Props) => {
   return (
     <div className="bg-white rounded-xl mb-4 shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 ease-in-out">
   <div className="p-6">
@@ -28,12 +29,12 @@ const JournalListItem = ({ journal, onJournalDelete }: Props) => {
     </div>
     
     <div className="flex justify-between items-center pt-4 border-t border-gray-200">
-      <button 
-        className="text-blue-500 hover:text-blue-700 transition-colors duration-150 ease-in-out font-medium"
-        onClick={() => {/* Add your edit function here */}}
-      >
-        Edit
-      </button>
+    <button 
+          className="text-blue-500 hover:text-blue-700 transition-colors duration-150 ease-in-out font-medium"
+          onClick={() => onJournalEdit(journal)}
+        >
+          Edit
+        </button>
       <DeleteJournal onJournalDelete={onJournalDelete} journalValue={journal.journalId} />
     </div>
   </div>

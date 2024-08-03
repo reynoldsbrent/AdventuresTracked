@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import JournalForm from './JournalForm/JournalForm';
-import { journalDeleteAPI, journalGetAPI, journalPostAPI } from '../../Services/JournalService';
+import { journalDeleteAPI, journalEditAPI, journalGetAPI, journalPostAPI } from '../../Services/JournalService';
 import { toast } from 'react-toastify';
 import { JournalGet } from '../../Models/Journal';
 import JournalList from '../JournalList/JournalList';
@@ -18,21 +18,41 @@ type JournalFormInputs = {
 const Journal = ({tripId}: Props) => {
     const [ journals, setJournals] = useState<JournalGet[] | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingJournal, setEditingJournal] = useState<JournalGet | null>(null);
 
     useEffect(() => {
         getJournals();
     }, []);
 
     const handleJournal = (e: JournalFormInputs) => {
-        journalPostAPI(tripId, e.title, e.entry).then((res) => {
-            if(res) {
-                toast.success("Journal created")
-                getJournals();
-                setIsModalOpen(false);
-            }
-        }).catch((e) => {
-            toast.warning(e);
-        });
+        if (editingJournal) {
+            journalEditAPI(editingJournal.journalId, e.title, e.entry).then((res) => {
+                if(res) {
+                    toast.success("Journal updated")
+                    getJournals();
+                    setIsModalOpen(false);
+                    setEditingJournal(null);
+                }
+            }).catch((e) => {
+                toast.warning(e);
+            });
+        } else {
+            journalPostAPI(tripId, e.title, e.entry).then((res) => {
+                if(res) {
+                    toast.success("Journal created")
+                    getJournals();
+                    setIsModalOpen(false);
+                }
+            }).catch((e) => {
+                toast.warning(e);
+            });
+        }
+        
+    };
+
+    const handleEdit = (journal: JournalGet) => {
+        setEditingJournal(journal);
+        setIsModalOpen(true);
     };
 
     const getJournals = () => {
@@ -62,13 +82,17 @@ const Journal = ({tripId}: Props) => {
     </svg>
     <span>Add Journal</span>
         </button>
-    <JournalList journals={journals!} onJournalDelete={onJournalDelete}/>
-    <JournalModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          tripId={tripId}
-          handleJournal={handleJournal}
-        />
+    <JournalList journals={journals!} onJournalDelete={onJournalDelete} onJournalEdit={handleEdit}/>
+            <JournalModal
+                isOpen={isModalOpen}
+                onClose={() => {
+                    setIsModalOpen(false);
+                    setEditingJournal(null);
+                }}
+                tripId={tripId}
+                handleJournal={handleJournal}
+                editingJournal={editingJournal}
+            />
     </div>
   )
 }
