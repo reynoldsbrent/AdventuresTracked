@@ -14,7 +14,7 @@ namespace api.Mappers
                 Title = journalModel.Title,
                 Entry = journalModel.Entry,
                 CreatedAt = journalModel.CreatedAt.Date,
-                CreatedBy = journalModel.AppUser.UserName,
+                //CreatedBy = journalModel.AppUser.UserName,
                 TripId = journalModel.TripId
             };
         }

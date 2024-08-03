@@ -8,7 +8,7 @@ namespace api.Dtos.Journal
         public int JournalId { get; set; }
         public string Title { get; set; }
         public string Entry { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public string CreatedBy { get; set; } = string.Empty;
     }
 }
