@@ -2,6 +2,7 @@ import React, { SyntheticEvent } from 'react'
 import { LegGet } from '../../Models/Leg';
 import DeleteLeg from '../Leg/DeleteLeg/DeleteLeg';
 import { DateFormatService } from '../../Services/DateFormatService';
+import { formatNumber } from '../../Services/NumberFormatService';
 
 type Props = {
     leg: LegGet;
@@ -18,7 +19,7 @@ const LegListItem = ({ leg, onLegDelete, onLegEdit }: Props) => {
             {leg.departureAirportId} - {leg.arrivalAirportId}
           </h3>
           <span className="text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
-            {leg.distanceMiles} miles
+            {formatNumber(leg.distanceMiles)} miles
           </span>
         </div>
         
