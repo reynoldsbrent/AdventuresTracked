@@ -6,9 +6,10 @@ import { DateFormatService } from '../../Services/DateFormatService';
 type Props = {
     leg: LegGet;
     onLegDelete: (e: SyntheticEvent) => void;
+    onLegEdit: (leg: LegGet) => void;
 }
 
-const LegListItem = ({ leg, onLegDelete }: Props) => {
+const LegListItem = ({ leg, onLegDelete, onLegEdit }: Props) => {
   return (
     <div className="bg-white mb-4 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 ease-in-out">
       <div className="p-6">
@@ -31,12 +32,12 @@ const LegListItem = ({ leg, onLegDelete }: Props) => {
         </div>
         
         <div className="flex justify-between items-center pt-4 border-t border-gray-200">
-          <button 
-            className="text-blue-500 hover:text-blue-700 transition-colors duration-150 ease-in-out font-medium"
-            onClick={() => {/* Add your edit function here */}}
-          >
-            Edit
-          </button>
+        <button 
+          className="text-blue-500 hover:text-blue-700 transition-colors duration-150 ease-in-out font-medium"
+          onClick={() => onLegEdit(leg)}
+        >
+          Edit
+        </button>
           <DeleteLeg onLegDelete={onLegDelete} legValue={leg.legId} />
         </div>
       </div>

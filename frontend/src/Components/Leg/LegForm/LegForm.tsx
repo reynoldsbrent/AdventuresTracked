@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as Yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from 'react-hook-form';
+import { LegGet } from '../../../Models/Leg';
+import { DateFormatService } from '../../../Services/DateFormatService';
 
 type Props = {
     tripId: number;
     handleLeg: (e: LegFormInputs) => void;
+    initialData: LegGet | null;
 };
 
 type LegFormInputs = {
@@ -28,8 +31,23 @@ const validation = Yup.object().shape({
   ),
 });
 
-const LegForm = ({tripId, handleLeg}: Props) => {
-  const { register, handleSubmit, formState: { errors }} = useForm<LegFormInputs>({ resolver: yupResolver(validation)});
+const LegForm = ({tripId, handleLeg, initialData}: Props) => {
+  const { register, handleSubmit, formState: { errors }, reset} = useForm<LegFormInputs>({ resolver: yupResolver(validation), defaultValues: initialData || {} });
+
+  useEffect(() => {
+    if (initialData) {
+        reset({
+          departureAirportId: initialData.departureAirportId,
+          arrivalAirportId: initialData.arrivalAirportId,
+          departureDate: DateFormatService(initialData.departureDate),
+          arrivalDate: DateFormatService(initialData.arrivalDate)
+        }
+          
+        );
+    } else {
+        reset({ departureAirportId: '', arrivalAirportId: '', departureDate: '', arrivalDate: '' });
+    }
+}, [initialData, reset]);
 
 return (
   <form className="mt-4 flex flex-col" onSubmit={handleSubmit(handleLeg)}>
@@ -65,12 +83,12 @@ return (
       />
       {errors.arrivalDate ? <p>{errors.arrivalDate.message}</p> : ""}
     
-    <button
-      type="submit"
-      className="mt-4 inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
-    >
-      Add Leg
-    </button>
+      <button
+          type="submit"
+          className="mt-4 inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+      >
+          {initialData ? 'Update Leg' : 'Add Leg'}
+      </button>
   </form>
 )
 }

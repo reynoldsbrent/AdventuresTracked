@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { legDeleteAPI, legGetAPI, legPostAPI } from '../../Services/LegService';
+import { legDeleteAPI, legEditAPI, legGetAPI, legPostAPI } from '../../Services/LegService';
 import { toast } from 'react-toastify';
 import { LegGet } from '../../Models/Leg';
 import LegList from '../LegList/LegList';
@@ -19,22 +19,42 @@ type LegFormInputs = {
 const Leg = ({tripId}: Props) => {
     const [legs, setLeg] = useState<LegGet[] | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingLeg, setEditingLeg] = useState<LegGet | null>(null);
 
     useEffect(() => {
        getLegs(); 
     }, []);
 
     const handleLeg = (e: LegFormInputs) => {
-        legPostAPI(tripId, e.departureAirportId, e.arrivalAirportId, e.departureDate, e.arrivalDate).then((res) => {
+      if (editingLeg) {
+        legEditAPI(editingLeg.legId, e.departureAirportId, e.arrivalAirportId, e.departureDate, e.arrivalDate).then((res) => {
             if(res) {
-                toast.success("Leg created")
+                toast.success("Leg updated")
                 getLegs();
                 setIsModalOpen(false);
+                setEditingLeg(null);
             }
         }).catch((e) => {
             toast.warning(e);
         });
+    } else{
+      legPostAPI(tripId, e.departureAirportId, e.arrivalAirportId, e.departureDate, e.arrivalDate).then((res) => {
+        if(res) {
+            toast.success("Leg created")
+            getLegs();
+            setIsModalOpen(false);
+        }
+    }).catch((e) => {
+        toast.warning(e);
+    });
+    }
+        
     };
+
+    const handleEdit = (leg: LegGet) => {
+      setEditingLeg(leg);
+      setIsModalOpen(true);
+  };
 
     const getLegs = () => {
         legGetAPI(tripId).then((res) => {
@@ -63,12 +83,16 @@ const Leg = ({tripId}: Props) => {
     </svg>
     <span>Add Leg</span>
   </button>
-  <LegList legs={legs!} onLegDelete={onLegDelete}/>
+  <LegList legs={legs!} onLegDelete={onLegDelete} onLegEdit={handleEdit}/>
   <LegModal
     isOpen={isModalOpen}
-    onClose={() => setIsModalOpen(false)}
+    onClose={() => {
+      setIsModalOpen(false);
+      setEditingLeg(null);
+  }}
     tripId={tripId}
     handleLeg={handleLeg}
+    editingLeg={editingLeg}
   />
 </div>
   )
