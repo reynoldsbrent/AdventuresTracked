@@ -3,6 +3,7 @@ import { LegGet } from '../../Models/Leg';
 import DeleteLeg from '../Leg/DeleteLeg/DeleteLeg';
 import { DateFormatService } from '../../Services/DateFormatService';
 import { formatNumber } from '../../Services/NumberFormatService';
+import { FaEdit } from 'react-icons/fa';
 
 type Props = {
     leg: LegGet;
