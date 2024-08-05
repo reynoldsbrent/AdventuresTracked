@@ -7,13 +7,15 @@ View the project plan here for AdventuresTracked here: https://github.com/reynol
 - Dynamically add photos to the trip cards using the Unsplash API
 - A map that shows the trips a user has taken
 - Photo gallery for each trip
-## How To Run The Web App
-### Prerequisites:
+## How To Run The Web App (3 Options)
+### Prerequisites
 - Git installed
 - Node.js and npm installed (for React frontend)
 - .NET SDK installed (for backend)
-- SQL Server (for database)
+- SQL Server (for database) if you wish to use a SQL Server database.
 - A code editor (e.g. Visual Studio Code for frontend, Visual Studio for backend)
+### SQLite Version Setup (Suggested)
+
 ### Windows Setup
 1. Clone the repository [git clone repository-url]
 2. Setup the frontend
