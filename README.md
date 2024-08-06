@@ -81,7 +81,7 @@ WITH
     - You should be able to create a user using the Register page, then login using your username and password.
     - Add any trips and trip details that you want.
 ## How to Use the Web App
-- You can click the Get Started button on the home page to bring you to the Signin page
+- You can click the Get Started button on the home page to bring you to the Sign in page
 - Signin or create a new user
 - Add trips on the next page
 - For each trip, you can click on the trip name which will take you to the trip details page
