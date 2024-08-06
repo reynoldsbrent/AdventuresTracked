@@ -15,7 +15,7 @@ namespace api
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -63,7 +63,7 @@ namespace api
 
             builder.Services.AddDbContext<ApplicationDBContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
             builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
@@ -104,7 +104,26 @@ namespace api
             builder.Services.AddScoped<IAirportRepository, AirportRepository>();
             builder.Services.AddScoped<ILegRepository, LegRepository>();
 
+            builder.Services.AddTransient<AirportSeeder>();
+
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<ApplicationDBContext>();
+                    var seeder = services.GetRequiredService<AirportSeeder>();
+                    await context.Database.MigrateAsync();
+                    await seeder.SeedAirportsAsync();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while seeding the database.");
+                }
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -124,7 +143,7 @@ namespace api
 
             app.MapControllers();
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

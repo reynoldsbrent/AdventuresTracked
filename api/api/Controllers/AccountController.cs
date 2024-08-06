@@ -29,9 +29,10 @@ namespace api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+            var user = await _userManager.Users.FirstOrDefaultAsync(x =>
+               x.NormalizedUserName == loginDto.Username.ToUpper());
 
-            if(user == null)
+            if (user == null)
             {
                 return Unauthorized("Invalid username");
             }

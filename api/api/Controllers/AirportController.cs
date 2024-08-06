@@ -24,7 +24,7 @@ namespace api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var airport = await _airportRepo.GetByCodeAsync(ICAO);
+            var airport = await _airportRepo.GetByCodeAsync(ICAO.ToUpper());
 
             if (airport == null)
             {

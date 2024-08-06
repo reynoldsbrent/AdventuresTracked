@@ -74,8 +74,8 @@ namespace api.Controllers
             }
 
             var legModel = legDto.ToLegFromCreate(trip.TripId);
-            var departureAirport = await _airportRepo.GetByCodeAsync(legModel.DepartureAirportId);
-            var arrivalAirport = await _airportRepo.GetByCodeAsync(legModel.ArrivalAirportId);
+            var departureAirport = await _airportRepo.GetByCodeAsync(legModel.DepartureAirportId.ToUpper());
+            var arrivalAirport = await _airportRepo.GetByCodeAsync(legModel.ArrivalAirportId.ToUpper());
 
             var departureAirportLatitude = departureAirport.Latitude;
             var departureAirportLongitude = departureAirport.Longitude;

@@ -81,8 +81,8 @@ namespace api.Repository
             existingLeg.DepartureDate = legDto.DepartureDate;
             existingLeg.ArrivalDate = legDto.ArrivalDate;
 
-            var departureAirport = await _airportRepo.GetByCodeAsync(legDto.DepartureAirportId);
-            var arrivalAirport = await _airportRepo.GetByCodeAsync(legDto.ArrivalAirportId);
+            var departureAirport = await _airportRepo.GetByCodeAsync(legDto.DepartureAirportId.ToUpper());
+            var arrivalAirport = await _airportRepo.GetByCodeAsync(legDto.ArrivalAirportId.ToUpper());
 
             var departureAirportLatitude = departureAirport.Latitude;
             var departureAirportLongitude = departureAirport.Longitude;
