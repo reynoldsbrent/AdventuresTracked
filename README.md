@@ -64,7 +64,7 @@ The frontend should now be running.
     - Open SQL Server Management Studio
     - Open a New Query window connected to the database specified in the connection string
     - Preload the Airports table with the airports.csv file provided
-    - To preload the data you can use a bulk insert command such as this:
+    - To preload the data, you can use a bulk insert command such as this:
 ```sql
 BULK INSERT Airports
 FROM 'C:\\path\\to\\your\\file.csv'
@@ -86,7 +86,7 @@ WITH
 - Add trips on the next page
 - For each trip, you can click on the trip name which will take you to the trip details page
 - Add any trip legs and journals that you wish!
-- Click the Logout buton when you are done
+- Click the Logout button when you are done
 
 ![Home Page](https://github.com/reynoldsbrent/AdventuresTracked/blob/main/Photos/HomePage.png?raw=true)
 
